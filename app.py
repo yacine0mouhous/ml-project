@@ -28,14 +28,14 @@ def predict_calories():
     except Exception as e:
         return jsonify({'error': str(e)}), 400    
 # Endpoint to suggest Workout Frequency
-@app.route('/suggest_frequency', methods=['POST'])
+@app.route('/predict/suggest_frequency', methods=['POST'])
 def suggest_frequency():
     data = request.json
     result = frequency_suggestion.suggest_workout_frequency(data)
     return jsonify(result)
 
 # Endpoint to predict Session Duration
-@app.route('/predict_session_duration', methods=['POST'])
+@app.route('/predict/session_duration', methods=['POST'])
 def predict_duration():
     data = request.json
     result = session_duration.predict_session_duration(data)
