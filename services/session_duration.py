@@ -1,9 +1,27 @@
-# Mock function for session duration prediction
+import joblib
+import numpy as np
+
+# Load the trained model once (recommended at app startup)
+duration_model = joblib.load('./models/duration.pkl')
+
+# Define the expected feature order
+expected_features = ['Age', 'Avg_BPM', 'Calories_Burned', 'Fat_Percentage', 'Gender_Male', 'Experience_Level_original']
+
 def predict_session_duration(data):
-    # Simulating a prediction based on some basic logic
-    if data['Experience_Level'] == 1:
-        return {'Session_Duration': 45}  # Beginner level
-    elif data['Experience_Level'] == 2:
-        return {'Session_Duration': 60}  # Intermediate level
-    else:
-        return {'Session_Duration': 90}  # Advanced level
+    try:
+        # Validate and extract features
+        features = [data[feat] for feat in expected_features]
+
+        # Reshape for prediction
+        features_array = np.array(features).reshape(1, -1)
+
+        # Predict session duration
+        prediction = duration_model.predict(features_array)[0]
+
+        # Return result
+        return {'Session_Duration': float(round(prediction, 2))}
+
+    except KeyError as e:
+        return {'error': f'Missing required feature: {str(e)}'}
+    except Exception as e:
+        return {'error': str(e)}

@@ -1,33 +1,28 @@
 import joblib
 import numpy as np
 
-# Load model and preprocessing tools
-model = joblib.load('./models/calories_burn/calories_model.pkl')
-scaler = joblib.load('./models/calories_burn/calories_scaler.pkl')
-label_encoders = joblib.load('./models/calories_burn/calories_label_encoders.pkl')
+# Load the trained model
+model = joblib.load('./models/calories_bruned_model.pkl')
 
-def predict(data):
-    # Ensure correct encoding for Workout_Type and Experience_Level
+# Get the required feature names in correct order
+model_features = model.feature_names_in_
+
+def predict(data: dict):
     try:
-        workout_type = label_encoders['Workout_Type'].transform([data['Workout_Type']])[0]
-        experience_level = label_encoders['Experience_Level'].transform([data['Experience_Level']])[0]
-    except KeyError:
-        return {'error': 'Invalid categorical values for Workout_Type or Experience_Level'}
+        # Extract and order features as expected by the model
+        features = [data[feat] for feat in model_features]
 
-    features = [
-        workout_type,
-        data['Session_Duration'],
-        data['Max_BPM'],
-        data['Avg_BPM'],
-        data['Age'],
-        data['Weight'],
-        experience_level
-    ]
+        # Convert to numpy array and reshape for prediction
+        features_array = np.array(features).reshape(1, -1)
 
-    # Scale features
-    features_scaled = scaler.transform([features])
+        # Make prediction
+        prediction_log = model.predict(features_array)
 
-    # Predict
-    prediction = model.predict(features_scaled)[0]
 
-    return {'Calories_Burned': round(prediction, 2)}
+
+        return {'Calories_Burned': float(prediction_log[0])}
+
+    except KeyError as e:
+        return {'error': f'Missing required feature: {str(e)}'}
+    except Exception as e:
+        return {'error': str(e)}

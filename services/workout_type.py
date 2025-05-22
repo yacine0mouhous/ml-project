@@ -1,6 +1,6 @@
 import joblib
 import numpy as np
-
+"""
 model = joblib.load('models/workout_type_model.pkl')
 scaler = joblib.load('models/workout_type_scaler.pkl')
 encoders = joblib.load('models/workout_type_label_encoders.pkl')
@@ -26,3 +26,4 @@ def predict(data):
     workout_type = encoders['Workout_Type'].inverse_transform([prediction])[0]
 
     return {'Workout_Type': workout_type}
+"""
