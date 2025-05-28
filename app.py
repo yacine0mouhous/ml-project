@@ -28,6 +28,12 @@ Request Body Example:
     "Age": 20,
     "Experience_Level": 1
 }
+goals : 
+Improve cardiovascular health
+Lose weight
+Build muscle
+Improve flexibility and balance
+
 
 Description:
 Predicts the most suitable workout type based on user goals and physical attributes.
@@ -173,6 +179,11 @@ Request Body Example:
     "Gender_Male": 0
 }
 
+Experience_Level:
+Beginner: 1
+Intermediate: 2
+Advanced: 3
+
 Description:
 Calculates Body Mass Index (BMI) based on weight and height.
 Returns the BMI value and possibly classification.
@@ -197,10 +208,13 @@ Request Body Example:
   "Calories_Burned": 800.0,
   "Water_Intake (liters)": 2.5,
   "Workout_Frequency (days/week)": 4.0,
-  "Experience_Level": 2.0,
+  "Experience_Level": 2.0, 
   "Gender_Male": 1.0
 }
-
+Experience_Level:
+Beginner: 1
+Intermediate: 2
+Advanced: 3
 
 Description:
 Predicts body fat percentage based on user physical data and experience.
