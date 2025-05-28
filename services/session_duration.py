@@ -2,7 +2,7 @@ import joblib
 import numpy as np
 
 # Load the trained model once (recommended at app startup)
-duration_model = joblib.load('./models/duration.pkl')
+duration_model = joblib.load('./models/session-duration/duration.pkl')
 
 # Define the expected feature order
 expected_features = ['Age', 'Avg_BPM', 'Calories_Burned', 'Fat_Percentage', 'Gender_Male', 'Experience_Level_original']

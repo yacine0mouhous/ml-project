@@ -3,8 +3,8 @@ import numpy as np
 import pandas as pd
 
 # Load model and scaler once (you can do this outside the function if preferred)
-model = joblib.load('./models/workout_frequency_model.pkl')
-scaler = joblib.load('./models/scaler.pkl')
+model = joblib.load('./models/workout-frequency/workout_frequency_model.pkl')
+scaler = joblib.load('./models/workout-frequency/workout_frequency_scaler.pkl')
 
 def predict_workout_frequency(data_json):
     try:

@@ -1,29 +1,27 @@
 import joblib
-import numpy as np
-"""
-model = joblib.load('models/workout_type_model.pkl')
-scaler = joblib.load('models/workout_type_scaler.pkl')
-encoders = joblib.load('models/workout_type_label_encoders.pkl')
+import pandas as pd
+from flask import request, jsonify
 
-def predict(data):
-    gender_encoded = 1 if data['Gender'].lower() == 'male' else 0
+# Load model and encoder globally once
+model = joblib.load('./models/workout-type/workout_model.pkl')
+goal_encoder = joblib.load('./models/workout-type/label_encoder.pkl')
 
-    features = [
-        data['Age'],
-        gender_encoded,
-        data['BMI'],
-        data['Fat%'],
-        data['Max_BPM'],
-        data['Avg_BPM'],
-        data['Experience'],
-        data['Frequency']
-    ]
+def predict_workout_controller():
+    data = request.get_json()
 
-    scaled = scaler.transform([features])
-    prediction = model.predict(scaled)[0]
+    required_fields = ['Goal', 'Height (m)', 'Weight (kg)', 'Age', 'Experience_Level']
+    if not all(field in data for field in required_fields):
+        return jsonify({'error': f'Missing fields. Required: {required_fields}'}), 400
 
-    # Convert numeric class back to label
-    workout_type = encoders['Workout_Type'].inverse_transform([prediction])[0]
+    df = pd.DataFrame([data])
 
-    return {'Workout_Type': workout_type}
-"""
+    try:
+        df['Goal_encoded'] = goal_encoder.transform(df['Goal'])
+    except ValueError:
+        return jsonify({'error': 'Invalid Goal value'}), 400
+
+    X = df[['Goal_encoded', 'Height (m)', 'Weight (kg)', 'Age', 'Experience_Level']]
+
+    prediction = model.predict(X)[0]
+
+    return jsonify({'predicted_workout_type': prediction})

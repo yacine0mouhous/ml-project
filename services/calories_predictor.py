@@ -2,7 +2,7 @@ import joblib
 import numpy as np
 
 # Load the trained model
-model = joblib.load('./models/calories_bruned_model.pkl')
+model = joblib.load('./models/calories-burn/calories_bruned_model.pkl')
 
 # Get the required feature names in correct order
 model_features = model.feature_names_in_
