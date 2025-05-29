@@ -1,41 +1,48 @@
-# Fitness Recommender API
 
-## Overview
+# 🏋️‍♂️ Fitness Recommender API
 
-This API provides personalized fitness and health recommendations using multiple machine learning models trained on user data. It supports predictions including workout type, calories burned, workout frequency, session duration, experience level, BMI, and body fat percentage.
+## 🚀 Overview
 
----
+The **Fitness Recommender API** provides smart, personalized fitness and health recommendations using advanced machine learning models trained on user data. It supports predictions for:
 
-## Model Performance Summary
-
-| Model               | Training Score / Accuracy | Testing Score / Accuracy | Cross-Validation Score / Accuracy        | Notes                   |
-|---------------------|---------------------------|--------------------------|------------------------------------------|-------------------------|
-| Calories Predictor   | R²: 0.9935, MAE: 17.74    | R²: 0.9528, MAE: 51.83   | R² CV (5 folds): 0.9526                   | Regression              |
-| Frequency Suggestion | R²: 0.7441, MAE: 0.4457   | R²: 0.7141, MAE: 0.5063  | R² CV (5 folds mean): 0.6738              | Regression              |
-| Session Duration     | R²: 0.9713, MAE: 0.0440   | R²: 0.9566, MAE: 0.0606  | R² CV (5 folds mean): 0.9525 ± 0.0080    | Regression              |
-| Workout Type         | Accuracy: 92.54%           | Accuracy: 86.67%         | —                                        | Classification          |
-| Experience Level     | Accuracy: 90.95%           | Accuracy: 91.39%         | CV Accuracy (5 folds): 89.93% ± 2.45%    | Classification          |
-| BMI                 | Accuracy: 94.51%           | Accuracy: 95.90%         | CV Accuracy (5 folds): 94.66%             | Classification          |
-| Fat Percentage       | R²: 0.8207, RMSE: 7.02    | R²: 0.8059, RMSE: 7.59   | R² CV (5 folds): 0.7977 ± 0.0298          | Regression              |
+✅ Workout Type  
+🔥 Calories Burned  
+📅 Workout Frequency  
+⏱️ Session Duration  
+🎯 Experience Level  
+📊 BMI  
+💪 Body Fat Percentage
 
 ---
 
-## API Endpoints Documentation
+## 📈 Model Performance Summary
 
-### 1. Home Route
-
-- **URL:** `/`  
-- **Method:** `GET`  
-- **Description:** API health check. Returns a simple confirmation message.
+| 🧠 Model              | 🏋️ Training Score / Accuracy | 🧪 Testing Score / Accuracy | 🔁 Cross-Validation Score / Accuracy | 📌 Notes          |
+|----------------------|------------------------------|-----------------------------|-------------------------------------|-------------------|
+| **Calories Predictor**   | R²: 0.9935, MAE: 17.74       | R²: 0.9528, MAE: 51.83      | R² CV (5 folds): 0.9526              | 🔢 Regression     |
+| **Frequency Suggestion** | R²: 0.7441, MAE: 0.4457      | R²: 0.7141, MAE: 0.5063     | R² CV (5 folds): 0.6738              | 🔢 Regression     |
+| **Session Duration**     | R²: 0.9713, MAE: 0.0440      | R²: 0.9566, MAE: 0.0606     | R² CV (5 folds): 0.9525 ± 0.0080     | 🔢 Regression     |
+| **Workout Type**         | Accuracy: 92.54%             | Accuracy: 86.67%            | —                                    | 🧩 Classification |
+| **Experience Level**     | Accuracy: 90.95%             | Accuracy: 91.39%            | CV: 89.93% ± 2.45%                    | 🧩 Classification |
+| **BMI**                  | Accuracy: 94.51%             | Accuracy: 95.90%            | CV: 94.66%                            | 🧩 Classification |
+| **Fat Percentage**       | R²: 0.8207, RMSE: 7.02       | R²: 0.8059, RMSE: 7.59      | R² CV: 0.7977 ± 0.0298                | 🔢 Regression     |
 
 ---
 
-### 2. Predict Workout Type
+## 📚 API Endpoints
+
+### 🏠 1. Home Route
+- **URL:** `/`
+- **Method:** `GET`
+- **Description:** Health check — confirms that the API is running.
+
+---
+
+### 🧠 2. Predict Workout Type
 
 - **URL:** `/predict/workout-type`  
 - **Method:** `POST`  
-- **Input Example:**
-
+- **Input:**
 ```json
 {
   "Goal": "Lose weight",
@@ -45,28 +52,15 @@ This API provides personalized fitness and health recommendations using multiple
   "Experience_Level": 1
 }
 ```
-
-- **Input Description:**  
-  - `Goal`: User's fitness goal. One of:  
-    - "Improve cardiovascular health"  
-    - "Lose weight"  
-    - "Build muscle"  
-    - "Improve flexibility and balance"  
-  - `Height (m)`: Height in meters (e.g., 1.75)  
-  - `Weight (kg)`: Weight in kilograms  
-  - `Age`: Age in years  
-  - `Experience_Level`: Encoded as integer (1: Beginner, 2: Intermediate, 3: Advanced)
-
-- **Output:** Predicted workout type best suited for the user.
+- **Output:** Suggested workout type (e.g., Cardio, Strength, HIIT)
 
 ---
 
-### 3. Predict Calories Burned
+### 🔥 3. Predict Calories Burned
 
 - **URL:** `/predict/calories-burn`  
 - **Method:** `POST`  
-- **Input Example:**
-
+- **Input:**
 ```json
 {
   "Height (m)": 1.79,
@@ -76,24 +70,15 @@ This API provides personalized fitness and health recommendations using multiple
   "Workout_Type_Code": 1
 }
 ```
-
-- **Input Description:**  
-  - `Height (m)`: Height in meters  
-  - `Avg_BPM`: Average heart beats per minute during workout  
-  - `Session_Duration (hours)`: Workout duration in hours  
-  - `Gender_Male`: 1 for male, 0 for female  
-  - `Workout_Type_Code`: Encoded workout type (e.g., 0=Cardio, 1=HIIT, 2=Strength, 3=Yoga)
-
-- **Output:** Predicted calories burned.
+- **Output:** Estimated calories burned.
 
 ---
 
-### 4. Suggest Workout Frequency
+### 📅 4. Suggest Workout Frequency
 
 - **URL:** `/predict/suggest_frequency`  
 - **Method:** `POST`  
-- **Input Example:**
-
+- **Input:**
 ```json
 {
   "Weight (kg)": 70,
@@ -103,24 +88,15 @@ This API provides personalized fitness and health recommendations using multiple
   "BMI": 22.5
 }
 ```
-
-- **Input Description:**  
-  - `Weight (kg)`: User’s weight  
-  - `Session_Duration (hours)`: Duration of workout session  
-  - `Fat_Percentage`: Body fat percentage  
-  - `Experience_Level`: 1 (Beginner), 2 (Intermediate), 3 (Advanced)  
-  - `BMI`: Body Mass Index
-
-- **Output:** Recommended number of workout sessions per week.
+- **Output:** Recommended workouts per week.
 
 ---
 
-### 5. Predict Session Duration
+### ⏱️ 5. Predict Session Duration
 
 - **URL:** `/predict/session_duration`  
 - **Method:** `POST`  
-- **Input Example:**
-
+- **Input:**
 ```json
 {
   "Age": 22,
@@ -131,25 +107,15 @@ This API provides personalized fitness and health recommendations using multiple
   "Experience_Level_original": 1
 }
 ```
-
-- **Input Description:**  
-  - `Age`: Age in years  
-  - `Avg_BPM`: Average heart rate during workout  
-  - `Calories_Burned`: Calories target for session  
-  - `Fat_Percentage`: Body fat percentage  
-  - `Gender_Male`: 1 for male, 0 for female  
-  - `Experience_Level_original`: 1=Beginner, 2=Intermediate, 3=Advanced
-
-- **Output:** Suggested session duration.
+- **Output:** Estimated session duration.
 
 ---
 
-### 6. Predict Experience Level
+### 🎯 6. Predict Experience Level
 
 - **URL:** `/predict/experience_level`  
 - **Method:** `POST`  
-- **Input Example:**
-
+- **Input:**
 ```json
 {
   "Session_Duration (hours)": 1.5,
@@ -159,24 +125,15 @@ This API provides personalized fitness and health recommendations using multiple
   "Workout_Frequency (days/week)": 4
 }
 ```
-
-- **Input Description:**  
-  - `Session_Duration (hours)`: Length of workout session  
-  - `Calories_Burned`: Calories burned per session  
-  - `Fat_Percentage`: Body fat percentage  
-  - `Water_Intake (liters)`: Daily water intake  
-  - `Workout_Frequency (days/week)`: Number of sessions per week
-
-- **Output:** Predicted experience level category.
+- **Output:** Predicted fitness experience level.
 
 ---
 
-### 7. Predict BMI
+### 📊 7. Predict BMI
 
 - **URL:** `/predict/bmi`  
 - **Method:** `POST`  
-- **Input Example:**
-
+- **Input:**
 ```json
 {
   "Weight": 90,
@@ -185,23 +142,15 @@ This API provides personalized fitness and health recommendations using multiple
   "Gender_Male": 0
 }
 ```
-
-- **Input Description:**  
-  - `Weight`: Weight in kilograms  
-  - `Height`: Height in meters  
-  - `Experience_Level`: 1=Beginner, 2=Intermediate, 3=Advanced  
-  - `Gender_Male`: 1=Male, 0=Female
-
-- **Output:** Predicted BMI value.
+- **Output:** Predicted BMI classification.
 
 ---
 
-### 8. Predict Fat Percentage
+### 💪 8. Predict Fat Percentage
 
 - **URL:** `/predict/fat`  
 - **Method:** `POST`  
-- **Input Example:**
-
+- **Input:**
 ```json
 {
   "Session_Duration (hours)": 1.2,
@@ -212,23 +161,19 @@ This API provides personalized fitness and health recommendations using multiple
   "Gender_Male": 1.0
 }
 ```
-
-- **Input Description:**  
-  - `Session_Duration (hours)`: Duration of workout session  
-  - `Calories_Burned`: Calories burned  
-  - `Water_Intake (liters)`: Daily water intake  
-  - `Workout_Frequency (days/week)`: Sessions per week  
-  - `Experience_Level`: 1=Beginner, 2=Intermediate, 3=Advanced  
-  - `Gender_Male`: 1=Male, 0=Female
-
-- **Output:** Predicted body fat percentage.
+- **Output:** Estimated body fat percentage.
 
 ---
 
-## Usage Notes
+## 🛠️ Usage Notes
 
-- All POST requests expect a JSON body matching the input examples above.  
-- Outputs are JSON responses with predicted values or classifications.  
-- Feature encodings (like `Experience_Level` or `Workout_Type_Code`) should match the documented values for correct predictions.
+- All endpoints use `POST` requests (except `/`).
+- Inputs must follow the documented schema.
+- Fields like `Experience_Level`, `Workout_Type_Code`, and `Gender_Male` must use correct encoded values.
+- Output is returned in JSON format.
 
 ---
+
+## 📬 Contact
+
+For questions, issues, or suggestions, feel free to reach out or open an issue. Happy training! 💥
