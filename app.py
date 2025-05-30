@@ -6,7 +6,7 @@ from services import bmi, fat, workout_type
 
 """
 To run the server:
-1. Install Flask: pip install flask  joblib 
+1. pip install flask numpy pandas joblib
 2. Run the server: python app.py
 """
 

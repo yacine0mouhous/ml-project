@@ -1,6 +1,16 @@
 
 # 🏋️‍♂️ Fitness Recommender API
 
+## 📦 Required Packages
+
+Install the following Python packages before running the API:
+
+```bash
+pip install flask numpy pandas joblib
+```
+
+---
+
 ## 🚀 Overview
 
 The **Fitness Recommender API** provides smart, personalized fitness and health recommendations using advanced machine learning models trained on user data. It supports predictions for:
@@ -176,4 +186,4 @@ The **Fitness Recommender API** provides smart, personalized fitness and health 
 
 ## 📬 Contact
 
-For questions, issues, or suggestions, feel free to reach out or open an issue. Happy training! 💥
+For questions, issues, or suggestions, feel free to reach out or open an issue. 💥

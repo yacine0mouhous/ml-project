@@ -2,7 +2,7 @@ import joblib
 import numpy as np
 import pandas as pd
 
-# Load model and scaler once (you can do this outside the function if preferred)
+# Load model and scaler
 model = joblib.load('./models/workout-frequency/workout_frequency_model.pkl')
 scaler = joblib.load('./models/workout-frequency/workout_frequency_scaler.pkl')
 
@@ -17,6 +17,7 @@ def predict_workout_frequency(data_json):
         # Predict workout frequency
         prediction = model.predict(scaled_features)[0]
         
-        return {'Workout_Frequency (days/week)': round(float(prediction), 2)}
+        # Round and cast to integer
+        return {'Workout_Frequency (days/week)': int(round(prediction))}
     except Exception as e:
         return {'error': str(e)}

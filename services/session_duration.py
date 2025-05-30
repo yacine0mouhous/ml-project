@@ -18,8 +18,14 @@ def predict_session_duration(data):
         # Predict session duration
         prediction = duration_model.predict(features_array)[0]
 
-        # Return result
-        return {'Session_Duration': float(round(prediction, 2))}
+        # Convert prediction to hours and minutes
+        hours = int(prediction)
+        minutes = int(round((prediction - hours) * 60))
+
+        return {
+            'hours': hours,
+            'minutes': minutes
+        }
 
     except KeyError as e:
         return {'error': f'Missing required feature: {str(e)}'}
